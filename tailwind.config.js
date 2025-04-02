@@ -10,17 +10,33 @@ export default {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#006FEE", // Cor de fundo do botão
+        focus: "#BEF264", // Cor de foco (se necessário)
+      },
+    },
   },
   darkMode: "class",
   plugins: [
     heroui({
-      theme: {
-        colors: {
-          primary: {
-            //... 50 to 900
-            foreground: "#FFFFFF",
-            DEFAULT: "#006FEE",
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              DEFAULT: "#006FEE", // Cor primária no tema claro
+              foreground: "#FFFFFF", // Cor do texto no botão
+            },
+            focus: "#BEF264", // Cor de foco no tema claro
+          },
+        },
+        dark: {
+          colors: {
+            primary: {
+              DEFAULT: "#FFFF00", // Cor primária no tema escuro (exemplo)
+              foreground: "#000000", // Cor do texto no botão no tema escuro
+            },
+            focus: "#BEF264", // Cor de foco no tema escuro
           },
         },
       },

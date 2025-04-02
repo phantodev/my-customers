@@ -1,0 +1,9 @@
+{
+  "customers": [
+    { "id": "1", "name": "Eduardo Burko", "age": 42 },
+    { "id": "2", "name": "Fernanda Silva", "age": 20 }
+  ],
+  "login": {
+    "token": "sa64d5as56a4d56a4da65d4a65sd4as65d4as65dasasd16das4d6as4d"
+  }
+}
