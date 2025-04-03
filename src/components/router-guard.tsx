@@ -13,11 +13,11 @@ export default function RouterGuard({ children }: RouterGuardProps) {
   useEffect(() => {
     // Se estiver na página de login e houver token, redireciona para /customers
     if (window.location.pathname === "/" && token) {
-      navigate("/customers");
+      navigate("/authenticated/customers");
     }
 
     // Se estiver na página /customers e não houver token, redireciona para login
-    if (window.location.pathname === "/customers" && !token) {
+    if (window.location.pathname === "/authenticated/customers" && !token) {
       navigate("/");
     }
 

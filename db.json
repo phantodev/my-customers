@@ -1,7 +1,185 @@
 {
   "customers": [
-    { "id": "1", "name": "Eduardo Burko", "age": 42 },
-    { "id": "2", "name": "Fernanda Silva", "age": 20 }
+    {
+      "id": "1",
+      "nome": "Maria Silva",
+      "documento": "123.456.789-00",
+      "endereco": "Rua das Flores, 123, São Paulo, SP",
+      "email": "maria.silva@email.com",
+      "telefone": "(11) 98765-4321",
+      "status": "Ativo"
+    },
+    {
+      "id": "2",
+      "nome": "José Almeida",
+      "documento": "987.654.321-00",
+      "endereco": "Avenida Paulista, 456, São Paulo, SP",
+      "email": "jose.almeida@email.com",
+      "telefone": "(11) 91234-5678",
+      "status": "Inativo"
+    },
+    {
+      "id": "3",
+      "nome": "Ana Costa",
+      "documento": "345.678.901-23",
+      "endereco": "Rua dos Três Irmãos, 789, Rio de Janeiro, RJ",
+      "email": "ana.costa@email.com",
+      "telefone": "(21) 99876-5432",
+      "status": "Ativo"
+    },
+    {
+      "id": "4",
+      "nome": "Paulo Souza",
+      "documento": "567.890.123-45",
+      "endereco": "Travessa da Paz, 321, Porto Alegre, RS",
+      "email": "paulo.souza@email.com",
+      "telefone": "(51) 92345-6789",
+      "status": "Suspenso"
+    },
+    {
+      "id": "5",
+      "nome": "Beatriz Lima",
+      "documento": "234.567.890-12",
+      "endereco": "Rua do Sol, 45, Salvador, BA",
+      "email": "beatriz.lima@email.com",
+      "telefone": "(71) 93321-4567",
+      "status": "Ativo"
+    },
+    {
+      "id": "6",
+      "nome": "Carlos Mendes",
+      "documento": "678.901.234-56",
+      "endereco": "Avenida Central, 1010, Belo Horizonte, MG",
+      "email": "carlos.mendes@email.com",
+      "telefone": "(31) 98712-3456",
+      "status": "Inativo"
+    },
+    {
+      "id": "7",
+      "nome": "Fernanda Oliveira",
+      "documento": "890.123.456-78",
+      "endereco": "Rua das Palmeiras, 88, Recife, PE",
+      "email": "fernanda.oliveira@email.com",
+      "telefone": "(81) 94567-8901",
+      "status": "Ativo"
+    },
+    {
+      "id": "8",
+      "nome": "Lucas Pereira",
+      "documento": "432.109.876-54",
+      "endereco": "Rua da Liberdade, 555, Curitiba, PR",
+      "email": "lucas.pereira@email.com",
+      "telefone": "(41) 91123-4567",
+      "status": "Suspenso"
+    },
+    {
+      "id": "9",
+      "nome": "Juliana Santos",
+      "documento": "321.654.987-00",
+      "endereco": "Avenida Beira-Mar, 789, Fortaleza, CE",
+      "email": "juliana.santos@email.com",
+      "telefone": "(85) 97654-3210",
+      "status": "Ativo"
+    },
+    {
+      "id": "10",
+      "nome": "Ricardo Gomes",
+      "documento": "654.321.098-76",
+      "endereco": "Rua das Acácias, 22, Brasília, DF",
+      "email": "ricardo.gomes@email.com",
+      "telefone": "(61) 93456-7890",
+      "status": "Inativo"
+    },
+    {
+      "id": "11",
+      "nome": "Sofia Rodrigues",
+      "documento": "789.012.345-67",
+      "endereco": "Rua dos Girassóis, 333, Florianópolis, SC",
+      "email": "sofia.rodrigues@email.com",
+      "telefone": "(48) 92234-5678",
+      "status": "Ativo"
+    },
+    {
+      "id": "12",
+      "nome": "Pedro Barbosa",
+      "documento": "543.210.987-65",
+      "endereco": "Avenida das Nações, 1500, Goiânia, GO",
+      "email": "pedro.barbosa@email.com",
+      "telefone": "(62) 98765-1234",
+      "status": "Suspenso"
+    },
+    {
+      "id": "13",
+      "nome": "Camila Ferreira",
+      "documento": "210.987.654-32",
+      "endereco": "Rua do Horizonte, 77, Manaus, AM",
+      "email": "camila.ferreira@email.com",
+      "telefone": "(92) 93345-6789",
+      "status": "Ativo"
+    },
+    {
+      "id": "14",
+      "nome": "Thiago Martins",
+      "documento": "876.543.210-98",
+      "endereco": "Rua das Orquídeas, 99, Vitória, ES",
+      "email": "thiago.martins@email.com",
+      "telefone": "(27) 91234-9876",
+      "status": "Inativo"
+    },
+    {
+      "id": "15",
+      "nome": "Larissa Duarte",
+      "documento": "109.876.543-21",
+      "endereco": "Avenida dos Ipês, 202, Natal, RN",
+      "email": "larissa.duarte@email.com",
+      "telefone": "(84) 94567-1234",
+      "status": "Ativo"
+    },
+    {
+      "id": "16",
+      "nome": "Rafael Teixeira",
+      "documento": "345.678.901-87",
+      "endereco": "Rua da Esperança, 444, Belém, PA",
+      "email": "rafael.teixeira@email.com",
+      "telefone": "(91) 98765-4321",
+      "status": "Suspenso"
+    },
+    {
+      "id": "17",
+      "nome": "Gabriela Nunes",
+      "documento": "567.890.123-09",
+      "endereco": "Rua das Violetas, 66, São Luís, MA",
+      "email": "gabriela.nunes@email.com",
+      "telefone": "(98) 93321-5678",
+      "status": "Ativo"
+    },
+    {
+      "id": "18",
+      "nome": "Bruno Carvalho",
+      "documento": "901.234.567-89",
+      "endereco": "Avenida do Contorno, 1200, Campo Grande, MS",
+      "email": "bruno.carvalho@email.com",
+      "telefone": "(67) 91234-6789",
+      "status": "Inativo"
+    },
+    {
+      "id": "19",
+      "nome": "Isabela Rocha",
+      "documento": "234.567.890-98",
+      "endereco": "Rua dos Jasmins, 111, João Pessoa, PB",
+      "email": "isabela.rocha@email.com",
+      "telefone": "(83) 98765-2345",
+      "status": "Ativo"
+    },
+    {
+      "id": "20",
+      "nome": "Matheus Lopes",
+      "documento": "678.901.234-01",
+      "endereco": "Rua da Amizade, 888, Maceió, AL",
+      "email": "matheus.lopes@email.com",
+      "telefone": "(82) 94567-8901",
+      "status": "Suspenso"
+    }
   ],
   "login": {
     "token": "sa64d5as56a4d56a4da65d4a65sd4as65d4as65dasasd16das4d6as4d"

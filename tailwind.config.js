@@ -9,14 +9,6 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#006FEE", // Cor de fundo do botão
-        focus: "#BEF264", // Cor de foco (se necessário)
-      },
-    },
-  },
   darkMode: "class",
   plugins: [
     heroui({
@@ -40,6 +32,7 @@ export default {
           },
         },
       },
+      override: true,
     }),
   ],
 };
