@@ -5,15 +5,24 @@ import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "@/config/axios-config";
+import { useNavigate } from "react-router-dom";
+import { addToast } from "@heroui/toast";
+
+type ApiRequest = {
+  email: string;
+  password: string;
+};
 
 export default function IndexPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<ApiRequest>();
 
   /**
    * The onSubmit function sends a POST request to the "/login" endpoint with the provided data.
@@ -21,13 +30,28 @@ export default function IndexPage() {
    * form data that needs to be submitted to the server for the login process. This data could include
    * fields such as username, password, or any other required information for authentication.
    */
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: ApiRequest) => {
     try {
-      const response = await api.get("/login", data);
+      setIsLoading(true);
+      // const response = await api.post("/login", data);
+      const response = await api.get("/login");
 
-      console.log(response.data);
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        addToast({
+          title: "Login efetuado com sucesso!",
+          color: "success",
+        });
+        navigate("/authenticated/customers");
+      }
     } catch (error) {
+      addToast({
+        title: "Problemas com conexão da API",
+        color: "danger",
+      });
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,8 +94,14 @@ export default function IndexPage() {
                   type={isPasswordVisible ? "text" : "password"}
                   {...register("password")}
                 />
-                <Button color="primary" size="lg" type="submit" variant="solid">
-                  Enviar
+                <Button
+                  color="primary"
+                  isLoading={isLoading}
+                  size="lg"
+                  type="submit"
+                  variant="solid"
+                >
+                  {isLoading ? "" : "Enviar"}
                 </Button>
                 <Button color="primary" size="lg" variant="light">
                   Esqueci minha senha
