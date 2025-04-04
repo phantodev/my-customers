@@ -16,23 +16,22 @@ export default {
         light: {
           colors: {
             primary: {
-              DEFAULT: "#006FEE", // Cor primária no tema claro
-              foreground: "#FFFFFF", // Cor do texto no botão
+              50: "#faf5ff", // purple-50
+              100: "#f3e8ff", // purple-100
+              200: "#e9d5ff", // purple-200
+              300: "#d8b4fe", // purple-300
+              400: "#c084fc", // purple-400
+              500: "#a855f7", // purple-500 (Main primary color)
+              600: "#9333ea", // purple-600
+              700: "#7e22ce", // purple-700
+              800: "#6b21a8", // purple-800
+              900: "#581c87", // purple-900
+              DEFAULT: "#a855f7", // Definido como purple-500, o tom principal
+              foreground: "#FFFFFF",
             },
-            focus: "#BEF264", // Cor de foco no tema claro
-          },
-        },
-        dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#FFFF00", // Cor primária no tema escuro (exemplo)
-              foreground: "#000000", // Cor do texto no botão no tema escuro
-            },
-            focus: "#BEF264", // Cor de foco no tema escuro
           },
         },
       },
-      override: true,
     }),
   ],
 };
