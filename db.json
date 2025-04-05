@@ -179,6 +179,33 @@
       "email": "matheus.lopes@email.com",
       "telefone": "(82) 94567-8901",
       "status": "Suspenso"
+    },
+    {
+      "id": "a864",
+      "nome": "Eduardo Burko",
+      "email": "dudu@dudu.com",
+      "status": "Ativo",
+      "endereco": "Rua Xingling",
+      "documento": "02302302303",
+      "telefone": "41959959599"
+    },
+    {
+      "id": "f07d",
+      "nome": "Danilão",
+      "email": "danilao@danilao.com.br",
+      "status": "Ativo",
+      "endereco": "Rua Brigadeiro Franco",
+      "documento": "54444964894",
+      "telefone": "45616551561"
+    },
+    {
+      "id": "93eb",
+      "nome": "Dudu Silva",
+      "email": "edu@silva.com.br",
+      "status": "ativo",
+      "endereco": "Rua Brigadeiro Franco",
+      "documento": "46545646545",
+      "telefone": "41651515615"
     }
   ],
   "login": {
