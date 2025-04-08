@@ -169,6 +169,22 @@
       "status": "ativo",
       "telefone": "41997602541",
       "documento": "03292447950"
+    },
+    {
+      "id": "a0d1",
+      "nome": "Dudu Burko",
+      "documento": "03292447950",
+      "email": "dudu@dudu.com",
+      "telefone": "41959595595",
+      "status": "Ativo"
+    },
+    {
+      "nome": "Burko Dudu",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "8117037",
+      "id": "4995"
     }
   ],
   "login": {

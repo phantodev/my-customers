@@ -72,9 +72,9 @@ export default function CustomersPage() {
     useState<customers | null>(null);
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
 
   const {
-    register,
     handleSubmit,
     setValue,
     reset,
@@ -84,14 +84,13 @@ export default function CustomersPage() {
   });
 
   useEffect(() => {
-    console.log("tempCustomerToUpdate changed:", tempCustomerToUpdate);
     if (tempCustomerToUpdate) {
       setNome(tempCustomerToUpdate.nome || "");
-      setDocument(tempCustomerToUpdate.documento || "");
+      setDocument(maskDocument(tempCustomerToUpdate.documento) || "");
       setAddress(tempCustomerToUpdate.endereco || "");
-      setPhone(tempCustomerToUpdate.telefone || "");
+      setPhone(maskPhone(tempCustomerToUpdate.telefone) || "");
       setEmail(tempCustomerToUpdate.email || "");
-      setValue("status", tempCustomerToUpdate.status || "");
+      setStatus(tempCustomerToUpdate.status || "");
     }
   }, [tempCustomerToUpdate, setValue]);
 
@@ -147,6 +146,29 @@ export default function CustomersPage() {
     }
   };
 
+  const onUpdate = async (data) => {
+    try {
+      console.log(data);
+      setIsLoading(true);
+      await api.put(`/customers/${tempUpdateID}`, data);
+      addToast({
+        title: "Cadastro atualiza com sucesso!",
+        color: "success",
+      });
+      reset();
+      onOpenChange();
+      getAllCustomers(currentPage);
+    } catch (error) {
+      addToast({
+        title: "Problemas com conexão da API",
+        color: "danger",
+      });
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onDelete = async () => {
     try {
       setIsDeleting(true);
@@ -176,6 +198,10 @@ export default function CustomersPage() {
           setAddress(response.data.logradouro);
           setCity(response.data.localidade);
           setState(response.data.uf);
+          setValue("endereco", response.data.logradouro);
+          setValue("cidade", response.data.localidade);
+          setValue("estado", response.data.uf);
+          setValue("cep", cep);
           setIsFetchingCEP(false);
         }
       }
@@ -191,6 +217,19 @@ export default function CustomersPage() {
     setAddress("");
     setCity("");
     setState("");
+  }
+
+  function handleClearStateFields() {
+    setTempCustomerToUpdate(null);
+    setNome("");
+    setDocument("");
+    setEmail("");
+    setPhone("");
+    setStatus("");
+    setAddress("");
+    setCity("");
+    setState("");
+    onOpen();
   }
 
   useEffect(() => {
@@ -224,7 +263,7 @@ export default function CustomersPage() {
     <div className="p-6">
       <div className="flex justify-between w-full items-center mb-4">
         <h1 className="text-2xl font-bold">Página dos clientes</h1>
-        <Button color="primary" onPress={onOpen}>
+        <Button color="primary" onPress={handleClearStateFields}>
           Novo Cliente
         </Button>
       </div>
@@ -305,7 +344,11 @@ export default function CustomersPage() {
                 Novo Cliente
               </DrawerHeader>
               <DrawerBody>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form
+                  onSubmit={handleSubmit(
+                    tempUpdateID !== "" ? onUpdate : onSubmit
+                  )}
+                >
                   <div className="flex flex-col gap-4">
                     <Input
                       isRequired
@@ -324,7 +367,7 @@ export default function CustomersPage() {
                       maxLength={11}
                       placeholder="Digite seu documento"
                       type="text"
-                      value={tempCustomerToUpdate?.documento || document}
+                      value={document}
                       onValueChange={(e) => {
                         const rawValue = e.replace(/\D/g, "");
 
@@ -355,7 +398,7 @@ export default function CustomersPage() {
                       maxLength={11}
                       placeholder="(00) 00000-0000"
                       type="text"
-                      value={tempCustomerToUpdate?.telefone || phone}
+                      value={phone}
                       onValueChange={(e) => {
                         const rawValue = e.replace(/\D/g, "");
 
@@ -373,10 +416,17 @@ export default function CustomersPage() {
                       className="w-full"
                       label="Status"
                       placeholder="Selecione um status"
-                      {...register("status")}
+                      selectedKeys={new Set([status])}
+                      onSelectionChange={(keys) => {
+                        const selectedStatus =
+                          Array.from(keys)[0]?.toString() || "";
+
+                        setStatus(selectedStatus);
+                        setValue("status", selectedStatus);
+                      }}
                     >
-                      <SelectItem key="ativo">Ativo</SelectItem>
-                      <SelectItem key="inativo">Inativo</SelectItem>
+                      <SelectItem key="Ativo">Ativo</SelectItem>
+                      <SelectItem key="Inativo">Inativo</SelectItem>
                     </Select>
                     <Input
                       isRequired
@@ -418,7 +468,8 @@ export default function CustomersPage() {
                         Cancelar
                       </Button>
                       <Button color="primary" type="submit">
-                        Cadastrar cliente
+                        {tempUpdateID !== "" ? "Atualizar" : "Cadastrar"}{" "}
+                        cliente
                       </Button>
                     </div>
                   </div>
