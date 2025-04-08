@@ -23,19 +23,26 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@heroui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Select, SelectItem } from "@heroui/select";
+import { DotsThreeVertical } from "@phosphor-icons/react";
 
+import { maskPhone } from "@/utils/maskPhone";
 import { customers } from "@/types/customers";
 import { api } from "@/config/axios-config";
 import { maskDocument } from "@/utils/maskDocument";
-import { maskPhone } from "@/utils/maskPhone";
-import { DotsThreeVertical } from "@phosphor-icons/react";
 
 export default function CustomersPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen: isOpenModal, onOpen: onOpenModal, onClose } = useDisclosure();
+
   const navigate = useNavigate();
   const location = useLocation(); // Aqui usamos o useLocation
   const queryParams = new URLSearchParams(location.search); // Criamos queryParams a partir de location.search
@@ -57,6 +64,14 @@ export default function CustomersPage() {
   const [state, setState] = useState("");
   const [cep, setCep] = useState("");
   const [isFetchingCEP, setIsFetchingCEP] = useState(false);
+  const [tempDeleteID, setTempDeleteID] = useState("");
+  const [tempUpdateID, setTempUpdateID] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [tempCustomerToUpdate, setTempCustomerToUpdate] =
+    useState<customers | null>(null);
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
 
   const {
     register,
@@ -64,7 +79,21 @@ export default function CustomersPage() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
+
+  useEffect(() => {
+    console.log("tempCustomerToUpdate changed:", tempCustomerToUpdate);
+    if (tempCustomerToUpdate) {
+      setNome(tempCustomerToUpdate.nome || "");
+      setDocument(tempCustomerToUpdate.documento || "");
+      setAddress(tempCustomerToUpdate.endereco || "");
+      setPhone(tempCustomerToUpdate.telefone || "");
+      setEmail(tempCustomerToUpdate.email || "");
+      setValue("status", tempCustomerToUpdate.status || "");
+    }
+  }, [tempCustomerToUpdate, setValue]);
 
   async function getAllCustomers(page: string) {
     try {
@@ -97,6 +126,7 @@ export default function CustomersPage() {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data);
       setIsLoading(true);
       await api.post("/customers", data);
       addToast({
@@ -114,6 +144,24 @@ export default function CustomersPage() {
       console.log(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      setIsDeleting(true);
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+      await api.delete(`/customers/${tempDeleteID}`);
+      addToast({
+        title: "Registro deletado com sucesso!",
+        color: "success",
+      });
+      onClose();
+      getAllCustomers(currentPage);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -152,6 +200,25 @@ export default function CustomersPage() {
   useEffect(() => {
     console.log(errors);
   }, [errors]);
+
+  useEffect(() => {
+    if (tempDeleteID !== "") {
+      onOpenModal();
+    }
+  }, [tempDeleteID]);
+
+  useEffect(() => {
+    if (tempUpdateID !== "") {
+      onOpen();
+      const customerChoosed = listCustomers.find(
+        (customer) => customer.id === tempUpdateID
+      );
+
+      if (customerChoosed) {
+        setTempCustomerToUpdate(customerChoosed);
+      }
+    }
+  }, [tempUpdateID]);
 
   return (
     <div className="p-6">
@@ -200,8 +267,18 @@ export default function CustomersPage() {
                     </Button>
                   </DropdownTrigger>
                   <DropdownMenu>
-                    <DropdownItem key="edit">Editar</DropdownItem>
-                    <DropdownItem key="delete">Deletar</DropdownItem>
+                    <DropdownItem
+                      key="edit"
+                      onPress={() => setTempUpdateID(item.id)}
+                    >
+                      Editar
+                    </DropdownItem>
+                    <DropdownItem
+                      key="delete"
+                      onPress={() => setTempDeleteID(item.id)}
+                    >
+                      Deletar
+                    </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </TableCell>
@@ -235,7 +312,11 @@ export default function CustomersPage() {
                       label="Nome"
                       placeholder="Digite o nome"
                       type="text"
-                      {...register("nome")}
+                      value={nome}
+                      onValueChange={(value) => {
+                        setNome(value);
+                        setValue("nome", value);
+                      }}
                     />
                     <Input
                       isRequired
@@ -243,15 +324,17 @@ export default function CustomersPage() {
                       maxLength={11}
                       placeholder="Digite seu documento"
                       type="text"
-                      value={document}
-                      onChange={(e) => {
-                        const value = e.currentTarget.value;
+                      value={tempCustomerToUpdate?.documento || document}
+                      onValueChange={(e) => {
+                        const rawValue = e.replace(/\D/g, "");
 
-                        if (value.length === 11) {
-                          setDocument(maskDocument(value));
-                          setValue("documento", value);
-                        } else {
-                          setDocument(value);
+                        if (rawValue.length <= 11) {
+                          setDocument(
+                            rawValue.length === 11
+                              ? maskDocument(rawValue)
+                              : rawValue
+                          );
+                          setValue("documento", rawValue);
                         }
                       }}
                     />
@@ -260,7 +343,11 @@ export default function CustomersPage() {
                       label="Email"
                       placeholder="Digite seu e-mail"
                       type="email"
-                      {...register("email")}
+                      value={email}
+                      onValueChange={(value) => {
+                        setEmail(value);
+                        setValue("email", value);
+                      }}
                     />
                     <Input
                       isRequired
@@ -268,15 +355,17 @@ export default function CustomersPage() {
                       maxLength={11}
                       placeholder="(00) 00000-0000"
                       type="text"
-                      value={phone}
+                      value={tempCustomerToUpdate?.telefone || phone}
                       onValueChange={(e) => {
-                        const value = e;
+                        const rawValue = e.replace(/\D/g, "");
 
-                        if (value.length === 11) {
-                          setPhone(maskPhone(value));
-                          setValue("telefone", value);
-                        } else {
-                          setPhone(value);
+                        if (rawValue.length <= 11) {
+                          setPhone(
+                            rawValue.length === 11
+                              ? maskPhone(rawValue)
+                              : rawValue
+                          );
+                          setValue("telefone", rawValue);
                         }
                       }}
                     />
@@ -339,6 +428,36 @@ export default function CustomersPage() {
           )}
         </DrawerContent>
       </Drawer>
+      <Modal backdrop="blur" isOpen={isOpenModal} onClose={onClose}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Deletar registro?
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  Esta ação não poderá ser revertida posteriormente. Nós
+                  realmente excluímos os registros de nosso banco de dados.
+                  Deseja continuar?
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Cancelar
+                </Button>
+                <Button
+                  color="danger"
+                  isLoading={isDeleting}
+                  onPress={onDelete}
+                >
+                  {!isDeleting && "Deletar"}
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

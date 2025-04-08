@@ -1,15 +1,6 @@
 {
   "customers": [
     {
-      "id": "1",
-      "nome": "Maria Silva",
-      "documento": "123.456.789-00",
-      "endereco": "Rua das Flores, 123, São Paulo, SP",
-      "email": "maria.silva@email.com",
-      "telefone": "(11) 98765-4321",
-      "status": "Ativo"
-    },
-    {
       "id": "2",
       "nome": "José Almeida",
       "documento": "987.654.321-00",
@@ -172,40 +163,12 @@
       "status": "Ativo"
     },
     {
-      "id": "20",
-      "nome": "Matheus Lopes",
-      "documento": "678.901.234-01",
-      "endereco": "Rua da Amizade, 888, Maceió, AL",
-      "email": "matheus.lopes@email.com",
-      "telefone": "(82) 94567-8901",
-      "status": "Suspenso"
-    },
-    {
-      "id": "a864",
+      "id": "551f",
       "nome": "Eduardo Burko",
-      "email": "dudu@dudu.com",
-      "status": "Ativo",
-      "endereco": "Rua Xingling",
-      "documento": "02302302303",
-      "telefone": "41959959599"
-    },
-    {
-      "id": "f07d",
-      "nome": "Danilão",
-      "email": "danilao@danilao.com.br",
-      "status": "Ativo",
-      "endereco": "Rua Brigadeiro Franco",
-      "documento": "54444964894",
-      "telefone": "45616551561"
-    },
-    {
-      "id": "93eb",
-      "nome": "Dudu Silva",
-      "email": "edu@silva.com.br",
+      "email": "dididdu@gmail.com",
       "status": "ativo",
-      "endereco": "Rua Brigadeiro Franco",
-      "documento": "46545646545",
-      "telefone": "41651515615"
+      "telefone": "41997602541",
+      "documento": "03292447950"
     }
   ],
   "login": {
