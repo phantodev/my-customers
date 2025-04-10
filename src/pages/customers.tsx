@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, forwardRef } from "react";
 import { Button } from "@heroui/button";
 import {
   Table,
@@ -91,6 +91,18 @@ export default function CustomersPage() {
       setPhone(maskPhone(tempCustomerToUpdate.telefone) || "");
       setEmail(tempCustomerToUpdate.email || "");
       setStatus(tempCustomerToUpdate.status || "");
+      setCep(tempCustomerToUpdate.cep || "");
+      setCity(tempCustomerToUpdate.cidade || "");
+      setState(tempCustomerToUpdate.estado || "");
+      setValue("nome", tempCustomerToUpdate.nome);
+      setValue("documento", tempCustomerToUpdate.documento);
+      setValue("telefone", tempCustomerToUpdate.telefone);
+      setValue("email", tempCustomerToUpdate.email);
+      setValue("status", tempCustomerToUpdate.status);
+      setValue("endereco", tempCustomerToUpdate.endereco);
+      setValue("cep", tempCustomerToUpdate.cep);
+      setValue("cidade", tempCustomerToUpdate.cidade);
+      setValue("estado", tempCustomerToUpdate.estado);
     }
   }, [tempCustomerToUpdate, setValue]);
 
@@ -158,6 +170,8 @@ export default function CustomersPage() {
       reset();
       onOpenChange();
       getAllCustomers(currentPage);
+      reset();
+      setTempUpdateID("");
     } catch (error) {
       addToast({
         title: "Problemas com conexão da API",
@@ -201,7 +215,7 @@ export default function CustomersPage() {
           setValue("endereco", response.data.logradouro);
           setValue("cidade", response.data.localidade);
           setValue("estado", response.data.uf);
-          setValue("cep", cep);
+          setValue("cep", e); // Usar o valor 'e' em vez de 'cep'
           setIsFetchingCEP(false);
         }
       }
@@ -217,6 +231,7 @@ export default function CustomersPage() {
     setAddress("");
     setCity("");
     setState("");
+    setTempUpdateID("");
   }
 
   function handleClearStateFields() {
@@ -299,6 +314,9 @@ export default function CustomersPage() {
                 <Dropdown
                   backdrop="opaque"
                   className="bg-background border-1 border-default-200"
+                  classNames={{
+                    content: "[inert]:opacity-50 [inert]:pointer-events-none",
+                  }}
                 >
                   <DropdownTrigger>
                     <Button isIconOnly radius="full" size="sm" variant="light">
@@ -336,7 +354,13 @@ export default function CustomersPage() {
         />
       </div>
 
-      <Drawer isOpen={isOpen} onOpenChange={handleCloseDrawer}>
+      <Drawer
+        isOpen={isOpen}
+        onOpenChange={handleCloseDrawer}
+        classNames={{
+          wrapper: "[&[data-overlay-container]]:inert",
+        }}
+      >
         <DrawerContent>
           {(onClose) => (
             <>
@@ -479,7 +503,14 @@ export default function CustomersPage() {
           )}
         </DrawerContent>
       </Drawer>
-      <Modal backdrop="blur" isOpen={isOpenModal} onClose={onClose}>
+      <Modal
+        backdrop="blur"
+        isOpen={isOpenModal}
+        onClose={onClose}
+        classNames={{
+          wrapper: "[&[data-overlay-container]]:inert",
+        }}
+      >
         <ModalContent>
           {(onClose) => (
             <>

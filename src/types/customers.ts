@@ -6,6 +6,9 @@ export type customers = {
   telefone: string;
   status: string;
   id: string;
+  cep: string;
+  cidade: string;
+  estado: string;
 };
 
 export type customersApiResponse = {

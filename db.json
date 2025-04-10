@@ -1,22 +1,28 @@
 {
   "customers": [
     {
-      "id": "2",
-      "nome": "José Almeida",
+      "nome": "José Dudu",
       "documento": "987.654.321-00",
-      "endereco": "Avenida Paulista, 456, São Paulo, SP",
-      "email": "jose.almeida@email.com",
-      "telefone": "(11) 91234-5678",
-      "status": "Inativo"
+      "telefone": "987.654.321-00",
+      "email": "dudu@duud.com",
+      "status": "Inativo",
+      "endereco": "Rua Baldur Magnus Grubba",
+      "cep": "81050610",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "id": "2"
     },
     {
-      "id": "3",
-      "nome": "Ana Costa",
-      "documento": "345.678.901-23",
-      "endereco": "Rua dos Três Irmãos, 789, Rio de Janeiro, RJ",
-      "email": "ana.costa@email.com",
-      "telefone": "(21) 99876-5432",
-      "status": "Ativo"
+      "nome": "Anan Burko",
+      "documento": "567.890.123-45",
+      "telefone": "(51) 92345-6789",
+      "email": "paulo.souza@email.com",
+      "status": "Inativo",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cep": "8117037",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "id": "3"
     },
     {
       "id": "4",
@@ -145,22 +151,20 @@
       "status": "Ativo"
     },
     {
-      "id": "18",
-      "nome": "Bruno Carvalho",
-      "documento": "901.234.567-89",
-      "endereco": "Avenida do Contorno, 1200, Campo Grande, MS",
-      "email": "bruno.carvalho@email.com",
-      "telefone": "(67) 91234-6789",
-      "status": "Inativo"
+      "nome": "Dudu Carvalho",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "8117037",
+      "id": "18"
     },
     {
-      "id": "19",
-      "nome": "Isabela Rocha",
-      "documento": "234.567.890-98",
-      "endereco": "Rua dos Jasmins, 111, João Pessoa, PB",
-      "email": "isabela.rocha@email.com",
-      "telefone": "(83) 98765-2345",
-      "status": "Ativo"
+      "nome": "Isabela ",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "8117037",
+      "id": "19"
     },
     {
       "id": "551f",
@@ -171,12 +175,12 @@
       "documento": "03292447950"
     },
     {
-      "id": "a0d1",
-      "nome": "Dudu Burko",
-      "documento": "03292447950",
-      "email": "dudu@dudu.com",
-      "telefone": "41959595595",
-      "status": "Ativo"
+      "nome": "ALunox X",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "8117037",
+      "id": "a0d1"
     },
     {
       "nome": "Burko Dudu",
@@ -185,6 +189,82 @@
       "estado": "PR",
       "cep": "8117037",
       "id": "4995"
+    },
+    {
+      "id": "a215",
+      "nome": "Novo Dudu",
+      "documento": "03292447950",
+      "email": "dudu@dudu.com",
+      "telefone": "41997602541",
+      "status": "Ativo",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "8117037"
+    },
+    {
+      "id": "285e",
+      "nome": "novo ricardo",
+      "documento": "0329244790",
+      "email": "rica@rica.com",
+      "telefone": "41997985985",
+      "status": "Ativo",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "81170370"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Tony Reichert",
+      "role": "CEO",
+      "team": "Management",
+      "status": "active",
+      "age": "29",
+      "avatar": "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+      "email": "tony.reichert@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Zoey Lang",
+      "role": "Technical Lead",
+      "team": "Development",
+      "status": "paused",
+      "age": "25",
+      "avatar": "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+      "email": "zoey.lang@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Jane Fisher",
+      "role": "Senior Developer",
+      "team": "Development",
+      "status": "active",
+      "age": "22",
+      "avatar": "https://i.pravatar.cc/150?u=a04258114e29026702d",
+      "email": "jane.fisher@example.com"
+    },
+    {
+      "id": 4,
+      "name": "William Howard",
+      "role": "Community Manager",
+      "team": "Marketing",
+      "status": "vacation",
+      "age": "28",
+      "avatar": "https://i.pravatar.cc/150?u=a048581f4e29026701d",
+      "email": "william.howard@example.com"
+    },
+    {
+      "id": 5,
+      "name": "Kristen Copper",
+      "role": "Sales Manager",
+      "team": "Sales",
+      "status": "active",
+      "age": "24",
+      "avatar": "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
+      "email": "kristen.cooper@example.com"
     }
   ],
   "login": {
