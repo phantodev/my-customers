@@ -5,6 +5,7 @@ import RouterGuard from "./components/router-guard";
 import IndexPage from "@/pages/index";
 import CustomersPage from "@/pages/customers";
 import FinancePage from "@/pages/finance";
+import FinanceAddPage from "@/pages/addFinance";
 import MyProfilePage from "@/pages/my-profile";
 import AuthenticatedPage from "@/pages/authenticated";
 
@@ -42,6 +43,14 @@ function App() {
             </RouterGuard>
           }
           path="finance"
+        />
+        <Route
+          element={
+            <RouterGuard>
+              <FinanceAddPage />
+            </RouterGuard>
+          }
+          path="finance/add"
         />
         <Route
           element={

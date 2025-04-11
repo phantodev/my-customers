@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -9,6 +10,7 @@ import {
   User,
   Chip,
   Tooltip,
+  Button,
 } from "@heroui/react";
 import { Eye, PencilSimple, Trash } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
@@ -45,6 +47,7 @@ async function fetchAxios(url: string): Promise<TUser[]> {
 }
 
 export default function App() {
+  const route = useNavigate();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["listUsers"],
     queryFn: () => fetchAxios("/users"),
@@ -122,26 +125,34 @@ export default function App() {
   }
 
   return (
-    <Table aria-label="Example table with custom cells">
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={data || []}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <div className="p-6">
+      <div className="flex justify-between w-full items-center mb-4">
+        <h1 className="text-2xl font-bold">Página dos clientes</h1>
+        <Button color="primary" onPress={() => route("/add")}>
+          Novo Cliente
+        </Button>
+      </div>
+      <Table aria-label="Example table with custom cells">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={data || []}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
