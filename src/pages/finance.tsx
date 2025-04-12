@@ -128,7 +128,7 @@ export default function App() {
     <div className="p-6">
       <div className="flex justify-between w-full items-center mb-4">
         <h1 className="text-2xl font-bold">Página dos clientes</h1>
-        <Button color="primary" onPress={() => route("/add")}>
+        <Button color="primary" onPress={() => route("add")}>
           Novo Cliente
         </Button>
       </div>

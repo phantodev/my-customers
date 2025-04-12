@@ -1,9 +1,21 @@
-import { Input, Select, SelectItem, Switch } from "@heroui/react";
+import { Button, Input, Select, SelectItem, Switch } from "@heroui/react";
 import { PencilSimple } from "@phosphor-icons/react";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  useDisclosure,
+  Slider,
+} from "@heroui/react";
+import Cropper from "react-easy-crop";
+import ImageUploading, { ImageListType } from "react-images-uploading";
+import getCroppedImg from "@/utils/getCroppedImg";
+import base64Converter from "@/utils/base64Converter";
 
 const addFinanceSchema = z.object({
   name: z
@@ -29,7 +41,33 @@ const addFinanceSchema = z.object({
 
 type TAddFinanceForm = z.infer<typeof addFinanceSchema>;
 
+type listImagesForUpload = {
+  dataURL: string;
+};
+
 export default function AddFinance() {
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [avatar, setAvatar] = useState(
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
+  );
+  const [images, setImages] = useState<listImagesForUpload[]>([]);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+  const onCropChange = (crop) => {
+    setCrop(crop);
+  };
+
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const onZoomChange = (zoom) => {
+    console.log(zoom);
+    setZoom(zoom);
+  };
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     control,
     handleSubmit,
@@ -49,15 +87,39 @@ export default function AddFinance() {
     },
   });
 
-  function onSubmit(data) {
+  const handleCropImage = async () => {
+    if (!croppedAreaPixels) return;
+    try {
+      const croppedImageUrl = await getCroppedImg(
+        images[0].dataURL,
+        croppedAreaPixels
+      );
+
+      setAvatar(croppedImageUrl); // Atualiza o estado do avatar com a imagem recortada
+      onOpenChange();
+      setCroppedAreaPixels(null);
+      setImages([]);
+      setZoom(1);
+      setCrop({ x: 0, y: 0 });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onChange = (
+    imageList: ImageListType,
+    addUpdateIndex: number[] | undefined
+  ) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList as never[]);
+  };
+
+  async function onSubmit(data) {
+    console.log(await base64Converter(avatar));
     console.log(data);
   }
 
-  //   useEffect(() => {
-  //     console.log(addFinanceSchema.parse({ name: "Eduardo" }));
-  //   }, []);
-
-  // Adicionando console.log dos erros
   console.log("Form Errors:", errors);
 
   return (
@@ -70,12 +132,13 @@ export default function AddFinance() {
               <div className="relative">
                 <div className="h-24 w-24 rounded-full bg-gray-200 overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
+                    src={avatar}
                     alt="Profile avatar"
                     className="h-full w-full object-cover"
                   />
                 </div>
                 <button
+                  onClick={() => onOpen()}
                   type="button"
                   className="absolute bottom-0 right-0 rounded-full bg-primary p-2 text-white hover:bg-primary/90"
                 >
@@ -187,6 +250,85 @@ export default function AddFinance() {
           </div>
         </form>
       </div>
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+        <DrawerContent>
+          {(onClose) => (
+            <>
+              <DrawerHeader className="flex flex-col gap-1 text-primary-700">
+                Edite seu avatar
+              </DrawerHeader>
+              <DrawerBody>
+                {images?.length === 0 ? (
+                  <ImageUploading multiple value={images} onChange={onChange}>
+                    {({
+                      imageList,
+                      onImageUpload,
+                      onImageRemoveAll,
+                      onImageUpdate,
+                      onImageRemove,
+                    }) => (
+                      // write your building UI
+                      <div className="upload__image-wrapper">
+                        <div className="w-full h-[300px] border-dashed border-primary-500 border-2 flex justify-center items-center">
+                          <button
+                            onClick={onImageUpload}
+                            className="text-primary-500 font-bold mr-2"
+                          >
+                            Clique aqui{" "}
+                          </button>{" "}
+                          para escolher sua foto
+                        </div>
+                      </div>
+                    )}
+                  </ImageUploading>
+                ) : (
+                  <>
+                    <div className="crop-container">
+                      <Cropper
+                        image={images[0].dataURL}
+                        crop={crop}
+                        zoom={zoom}
+                        aspect={1}
+                        cropShape="round"
+                        showGrid={false}
+                        onCropChange={onCropChange}
+                        onCropComplete={onCropComplete}
+                        onZoomChange={onZoomChange}
+                      />
+                    </div>
+                    <div className="flex flex-col mt-[330px]">
+                      <div className="text-primary text-lg mb-4 font-semibold">
+                        Manipule o Zoom
+                      </div>
+
+                      <Slider
+                        key="full"
+                        aria-label="SIze image"
+                        className="w-full"
+                        defaultValue={0}
+                        maxValue={3}
+                        minValue={1}
+                        radius="full"
+                        step={0.1}
+                        onChange={onZoomChange}
+                      />
+                      <Button
+                        className="mt-10"
+                        color="primary"
+                        size="lg"
+                        fullWidth
+                        onPress={handleCropImage}
+                      >
+                        Efetuar o crop
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </DrawerBody>
+            </>
+          )}
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

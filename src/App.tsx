@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 
 import RouterGuard from "./components/router-guard";
 
+import "./globals.css";
+
 import IndexPage from "@/pages/index";
 import CustomersPage from "@/pages/customers";
 import FinancePage from "@/pages/finance";
