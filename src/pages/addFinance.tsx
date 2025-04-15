@@ -1,4 +1,11 @@
-import { Button, Input, Select, SelectItem, Switch } from "@heroui/react";
+import {
+  addToast,
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  Switch,
+} from "@heroui/react";
 import { PencilSimple } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -16,6 +23,8 @@ import Cropper from "react-easy-crop";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import getCroppedImg from "@/utils/getCroppedImg";
 import base64Converter from "@/utils/base64Converter";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createCustomer } from "@/services/financeService";
 
 const addFinanceSchema = z.object({
   name: z
@@ -32,20 +41,21 @@ const addFinanceSchema = z.object({
     }),
   team: z
     .string({ message: "O valor não é um string" })
-    .min(10, { message: "Nome deve ter mínimo 10 caracteres" }),
+    .min(10, { message: "Time deve ter mínimo 10 caracteres" }),
   role: z
     .string({ message: "O valor não é um string" })
     .min(4, { message: "Selecione um item da Role" }),
   status: z.boolean(),
 });
 
-type TAddFinanceForm = z.infer<typeof addFinanceSchema>;
+export type TAddFinanceForm = z.infer<typeof addFinanceSchema>;
 
 type listImagesForUpload = {
   dataURL: string;
 };
 
 export default function AddFinance() {
+  const queryClient = useQueryClient();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [avatar, setAvatar] = useState(
@@ -74,6 +84,7 @@ export default function AddFinance() {
     setValue,
     setError,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm<TAddFinanceForm>({
     resolver: zodResolver(addFinanceSchema),
@@ -120,12 +131,43 @@ export default function AddFinance() {
     console.log(data);
   }
 
+  const { data, isError, isPending, mutate } = useMutation({
+    mutationKey: ["mutate-my-profile"],
+    mutationFn: async (data: TAddFinanceForm) =>
+      await createCustomer(data, avatar),
+    onError: (error) => {
+      addToast({
+        title: error.toString(),
+        color: "danger",
+      });
+    },
+    onSuccess: () => {
+      addToast({
+        title: "Cliente cadastrado com sucesso!",
+        color: "success",
+      }),
+        clearErrors();
+      reset({
+        email: "",
+        name: "",
+        status: true,
+        age: "",
+        team: "",
+        role: "", // Explicitly set role to empty string
+      });
+      queryClient.refetchQueries({
+        queryKey: ["listUsers"],
+      });
+    },
+    onSettled: () => console.log("TESTE"),
+  });
+
   console.log("Form Errors:", errors);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-6">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit((data) => mutate(data))}>
           <div className="space-y-8">
             {/* Avatar Section */}
             <div className="flex justify-center">
@@ -160,6 +202,8 @@ export default function AddFinance() {
                     placeholder="Enter your name"
                     type="text"
                     variant="bordered"
+                    isInvalid={!!errors?.name?.message}
+                    errorMessage={errors?.name?.message}
                   />
                 )}
               />
@@ -174,6 +218,8 @@ export default function AddFinance() {
                     placeholder="Enter your email"
                     type="email"
                     variant="bordered"
+                    isInvalid={!!errors?.email?.message}
+                    errorMessage={errors?.email?.message}
                   />
                 )}
               />
@@ -188,6 +234,8 @@ export default function AddFinance() {
                     placeholder="Enter your team"
                     type="text"
                     variant="bordered"
+                    isInvalid={!!errors?.team?.message}
+                    errorMessage={errors?.team?.message}
                   />
                 )}
               />
@@ -201,6 +249,8 @@ export default function AddFinance() {
                     placeholder="Enter your age"
                     type="text"
                     variant="bordered"
+                    isInvalid={!!errors?.age?.message}
+                    errorMessage={errors?.age?.message}
                   />
                 )}
               />
@@ -213,6 +263,10 @@ export default function AddFinance() {
                     label="Role"
                     placeholder="Select a role"
                     variant="bordered"
+                    selectedKeys={field.value ? [field.value] : []}
+                    onChange={field.onChange}
+                    isInvalid={!!errors?.role?.message}
+                    errorMessage={errors?.role?.message}
                   >
                     <SelectItem key="admin">Admin</SelectItem>
                     <SelectItem key="user">User</SelectItem>
@@ -240,12 +294,13 @@ export default function AddFinance() {
 
             {/* Submit Button */}
             <div className="flex justify-end">
-              <button
+              <Button
                 type="submit"
+                isLoading={isPending}
                 className="inline-flex justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none"
               >
-                Save
-              </button>
+                {!isPending ? "Save" : ""}
+              </Button>
             </div>
           </div>
         </form>

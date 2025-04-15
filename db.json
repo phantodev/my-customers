@@ -217,7 +217,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Tony Reichert",
       "role": "CEO",
       "team": "Management",
@@ -227,7 +227,7 @@
       "email": "tony.reichert@example.com"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Zoey Lang",
       "role": "Technical Lead",
       "team": "Development",
@@ -237,7 +237,7 @@
       "email": "zoey.lang@example.com"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Jane Fisher",
       "role": "Senior Developer",
       "team": "Development",
@@ -247,7 +247,7 @@
       "email": "jane.fisher@example.com"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "William Howard",
       "role": "Community Manager",
       "team": "Marketing",
@@ -257,7 +257,7 @@
       "email": "william.howard@example.com"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Kristen Copper",
       "role": "Sales Manager",
       "team": "Sales",
@@ -265,6 +265,15 @@
       "age": "24",
       "avatar": "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
       "email": "kristen.cooper@example.com"
+    },
+    {
+      "id": "2058",
+      "name": "Dudu Silva",
+      "email": "dudu@dudu.com",
+      "age": "25",
+      "team": "FrontendTeamXalala",
+      "role": "developer",
+      "status": true
     }
   ],
   "login": {
