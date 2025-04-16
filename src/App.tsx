@@ -10,6 +10,7 @@ import FinancePage from "@/pages/finance";
 import FinanceAddPage from "@/pages/addFinance";
 import MyProfilePage from "@/pages/my-profile";
 import AuthenticatedPage from "@/pages/authenticated";
+import HomePage from "@/pages/swiper";
 
 function App() {
   return (
@@ -37,6 +38,14 @@ function App() {
             </RouterGuard>
           }
           path="customers"
+        />
+        <Route
+          element={
+            <RouterGuard>
+              <HomePage />
+            </RouterGuard>
+          }
+          path="swiper"
         />
         <Route
           element={

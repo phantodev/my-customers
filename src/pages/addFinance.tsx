@@ -380,6 +380,7 @@ export default function AddFinance() {
                         size="lg"
                         fullWidth
                         onPress={handleCropImage}
+                        
                       >
                         Efetuar o crop
                       </Button>
