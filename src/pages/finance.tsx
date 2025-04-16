@@ -35,12 +35,12 @@ const statusColorMap: Record<
   vacation: "warning",
 };
 
-type TUser = {
+export type TUser = {
   id: string;
   name: string;
   role: string;
   team: string;
-  status: "active" | "paused" | "vacation";
+  status: boolean;
   age: string;
   avatar: string;
   email: string;
@@ -54,7 +54,7 @@ async function fetchAxios(url: string): Promise<TUser[]> {
 
 export default function App() {
   const { tempCustomer, setTempCustomer } = useStore();
-  const route = useNavigate();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["listUsers"],
@@ -64,12 +64,6 @@ export default function App() {
     refetchOnWindowFocus: true,
     retry: 4,
   });
-
-  useEffect(() => {
-    if (tempCustomer !== null) {
-      console.log(tempCustomer);
-    }
-  }, [tempCustomer]);
 
   const mutation = useMutation({
     mutationKey: ["delete-customer"],
@@ -131,15 +125,15 @@ export default function App() {
           return (
             <div className="relative flex items-center gap-2">
               <Tooltip content="Details">
-                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <button type="button" onClick={() => console.tron.log(user)} className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <Eye size={20} />
-                </span>
+                </button>
               </Tooltip>
               <Tooltip content="Edit user">
                 <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                   <PencilSimple
                     size={20}
-                    onClick={() => setTempCustomer(user)}
+                    onClick={() => {setTempCustomer(user); navigate("add");}}
                   />
                 </span>
               </Tooltip>
@@ -154,7 +148,7 @@ export default function App() {
           return cellValue;
       }
     },
-    []
+    [mutation.mutate, setTempCustomer],
   );
 
   if (isLoading) {
@@ -169,7 +163,7 @@ export default function App() {
     <div className="p-6">
       <div className="flex justify-between w-full items-center mb-4">
         <h1 className="text-2xl font-bold">Página dos clientes</h1>
-        <Button color="primary" onPress={() => route("add")}>
+        <Button color="primary" onPress={() => navigate("add")}>
           Novo Cliente
         </Button>
       </div>
@@ -185,10 +179,10 @@ export default function App() {
           )}
         </TableHeader>
         <TableBody items={data || []}>
-          {(item) => (
-            <TableRow key={item.id}>
+          {(user) => (
+            <TableRow key={user.id}>
               {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+                <TableCell>{renderCell(user, columnKey)}</TableCell>
               )}
             </TableRow>
           )}

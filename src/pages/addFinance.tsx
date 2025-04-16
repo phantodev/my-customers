@@ -1,5 +1,4 @@
 import {
-  addToast,
   Button,
   Input,
   Select,
@@ -24,7 +23,10 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 import getCroppedImg from "@/utils/getCroppedImg";
 import base64Converter from "@/utils/base64Converter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCustomer } from "@/services/financeService";
+import { createCustomer, updateCustomer } from "@/services/financeService";
+import { useStore } from "@/stores/useStore";
+import { addToast } from "@heroui/toast";
+import { useNavigate } from "react-router-dom";
 
 const addFinanceSchema = z.object({
   name: z
@@ -55,6 +57,8 @@ type listImagesForUpload = {
 };
 
 export default function AddFinance() {
+  const navigate = useNavigate();
+  const { tempCustomer, setTempCustomer } = useStore();
   const queryClient = useQueryClient();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -89,12 +93,12 @@ export default function AddFinance() {
   } = useForm<TAddFinanceForm>({
     resolver: zodResolver(addFinanceSchema),
     defaultValues: {
-      email: "",
-      name: "",
-      status: true,
-      age: "",
-      team: "",
-      role: "",
+      email: tempCustomer?.email || "",
+      name: tempCustomer?.name || "",
+      status: tempCustomer?.status || true,
+      age: tempCustomer?.age || "",
+      team: tempCustomer?.team || "",
+      role: tempCustomer?.role || "",
     },
   });
 
@@ -126,15 +130,15 @@ export default function AddFinance() {
     setImages(imageList as never[]);
   };
 
-  async function onSubmit(data) {
-    console.log(await base64Converter(avatar));
-    console.log(data);
-  }
-
-  const { data, isError, isPending, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ["mutate-my-profile"],
-    mutationFn: async (data: TAddFinanceForm) =>
-      await createCustomer(data, avatar),
+    mutationFn: async (data: TAddFinanceForm) => {
+      if(tempCustomer){
+        await updateCustomer(tempCustomer.id, data, avatar)
+      } else {
+        await createCustomer(data, avatar)
+      }
+    },
     onError: (error) => {
       addToast({
         title: error.toString(),
@@ -143,9 +147,9 @@ export default function AddFinance() {
     },
     onSuccess: () => {
       addToast({
-        title: "Cliente cadastrado com sucesso!",
+        title: `Cliente ${tempCustomer?.name ? "atualizado" : "cadastrado"} com sucesso!`,
         color: "success",
-      }),
+      });
         clearErrors();
       reset({
         email: "",
@@ -155,6 +159,9 @@ export default function AddFinance() {
         team: "",
         role: "", // Explicitly set role to empty string
       });
+      if(tempCustomer){
+        navigate("/authenticated/finance");
+      }
       queryClient.refetchQueries({
         queryKey: ["listUsers"],
       });
