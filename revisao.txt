@@ -1,0 +1,19 @@
+1 - O que é React?
+2 - O que é a Reatividade?
+3 - Qual a diferença de uma váriavel do tipo useState para uma váriavel normal?
+4 - O que são os HOOKS?
+5 - Qual é o HOOK que usamos quando queremos fazer alguma ação... quando um conteúdo de uma váriavel mudou?
+6 - Aprendam a diferença entre React.useCallBack, React.useMemo, React.memo.
+7 - Quais são as opções que podemos estilizar uma interface react? Tailwind, Bootstrap, Styled-Components, Css Modules, PreProcessor (SASS)
+8 - O que são bibliotecas de componentes? CHAKRA, HEROUI, SHADCN, MUI, ANTDESIGN.
+9 - Qual framework React que usaremos? NEXTJS ou VITE. Qual a diferença entre eles?
+10 - Qual é o padrão de ROTEAMENTO de rotas que o NEXTJS usa? FILE-ROUTING
+10 - Qual é o padrão de ROTEAMENTO de rotas que o VITE usa? Ou você usa o REACT-ROUTER ou você usa o TANSTACK ROUTER.
+11 - Qual a diferença de fazer uma gestão de formulários usando apenas useState ou RHF.
+12 - Qual é a forma de você validar campos de um formulário? Minha própria função. Usando ZOD ou YUP. Schema Validators.
+13 - Qual é a forma de fazer requisições HTTP dentro do JS? FETCH() ou vai usar o AXIOS.
+14 - Recebi o TOKEN de autenticação, o que fazemos com ele? Temos que armazenar, certo? Existem quatro formas de armazenar? LocalStorage, SessionStorage, Cookies, Zustand.
+15 - Não esquecer se ler o manual COMPLETO... do REACT QUERY.
+
+
+

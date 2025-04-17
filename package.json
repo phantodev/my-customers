@@ -31,6 +31,7 @@
     "@heroui/toast": "^2.0.6",
     "@heroui/use-theme": "2.1.6",
     "@hookform/resolvers": "^5.0.1",
+    "@lottiefiles/dotlottie-react": "^0.13.3",
     "@phosphor-icons/react": "^2.1.7",
     "@react-aria/visually-hidden": "3.8.20",
     "@react-types/shared": "3.28.0",

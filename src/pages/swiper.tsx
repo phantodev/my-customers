@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/config/axios-config';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export type TBanner = {
   id: string;
@@ -27,7 +28,7 @@ async function fetchAxios(url: string): Promise<TBanner[]> {
 export default function HomePage(){
   const {data, isLoading, isError} = useQuery({
     queryKey: ["listBanners"],
-    queryFn: () => fetchAxios("/banners"),
+    queryFn: () => fetchAxios("/bannners"),
     gcTime: 24 * 60 * 60 * 1000,
     staleTime: 24 * 60 * 60 * 1000,
     refetchOnWindowFocus: true,
@@ -36,13 +37,21 @@ export default function HomePage(){
 
   if(isLoading){
     return (
-      <div className="w-full h-[500px] flex justify-center items-center text-center">Aguarde carregando banners...</div>
+      <div className="w-full h-[500px] flex justify-center items-center text-center"><DotLottieReact
+      src="/loader.json"
+      loop
+      autoplay
+    /></div>
     )
   }
 
   if(isError){
     return (
-      <div className="w-full h-[500px] flex justify-center items-center text-center">Erro ao carregar banners</div>
+      <div className="w-full h-[500px] flex justify-center items-center text-center"><DotLottieReact
+      src="/coffee.json"
+      loop
+      autoplay
+    /></div>
     )
   }
 
