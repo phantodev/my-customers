@@ -278,11 +278,11 @@ export default function CustomersPage() {
     <div className="p-6">
       <div className="flex justify-between w-full items-center mb-4">
         <h1 className="text-2xl font-bold">Página dos clientes</h1>
-        <Button color="primary" onPress={handleClearStateFields}>
+        <Button data-testid="new-customer-button" color="primary" onPress={handleClearStateFields}>
           Novo Cliente
         </Button>
       </div>
-      <Table isStriped removeWrapper aria-label="Cadastro de Clientes">
+      <Table data-testid="table-customers" isStriped removeWrapper aria-label="Cadastro de Clientes">
         <TableHeader>
           <TableColumn>Nome</TableColumn>
           <TableColumn>Documento</TableColumn>
@@ -298,7 +298,7 @@ export default function CustomersPage() {
           items={isFetching ? [] : listCustomers}
           loadingContent={
             <div className="mt-10">
-              <Spinner label="Carregando lista de clientes" size="lg" />
+              <Spinner data-testid="spinner-customers" label="Carregando lista de clientes" size="lg" />
             </div>
           }
         >
@@ -345,6 +345,7 @@ export default function CustomersPage() {
       </Table>
       <div className="mt-4 flex justify-center items-center w-full">
         <Pagination
+          data-testid="pagination"
           isCompact
           showControls
           isDisabled={isFetching}
@@ -355,6 +356,7 @@ export default function CustomersPage() {
       </div>
 
       <Drawer
+      data-testid="drawer"
         isOpen={isOpen}
         onOpenChange={handleCloseDrawer}
         classNames={{
@@ -377,6 +379,7 @@ export default function CustomersPage() {
                     <Input
                       isRequired
                       label="Nome"
+                      data-testid="name-input"
                       placeholder="Digite o nome"
                       type="text"
                       value={nome}
@@ -387,6 +390,7 @@ export default function CustomersPage() {
                     />
                     <Input
                       isRequired
+                      data-testid="document-input"
                       label="Documento"
                       maxLength={11}
                       placeholder="Digite seu documento"
@@ -407,6 +411,7 @@ export default function CustomersPage() {
                     />
                     <Input
                       isRequired
+                      data-testid="email-input"
                       label="Email"
                       placeholder="Digite seu e-mail"
                       type="email"
@@ -418,6 +423,7 @@ export default function CustomersPage() {
                     />
                     <Input
                       isRequired
+                      data-testid="phone-input"
                       label="Telefone"
                       maxLength={11}
                       placeholder="(00) 00000-0000"
@@ -438,6 +444,7 @@ export default function CustomersPage() {
                     />
                     <Select
                       className="w-full"
+                      data-testid="status-input"
                       label="Status"
                       placeholder="Selecione um status"
                       selectedKeys={new Set([status])}
@@ -454,6 +461,7 @@ export default function CustomersPage() {
                     </Select>
                     <Input
                       isRequired
+                      data-testid="cep-input"
                       endContent={isFetchingCEP && <Spinner size="sm" />}
                       label="CEP"
                       placeholder="Digite seu cep"
@@ -464,6 +472,7 @@ export default function CustomersPage() {
                     <Input
                       isRequired
                       readOnly
+                      data-testid="address-input"
                       label="Endereço"
                       placeholder="Digite seu endereço"
                       type="text"
@@ -473,6 +482,7 @@ export default function CustomersPage() {
                       <Input
                         isRequired
                         readOnly
+                        data-testid="city-input"
                         label="Cidade"
                         placeholder="Digite seu endereço"
                         type="text"
@@ -481,6 +491,7 @@ export default function CustomersPage() {
                       <Input
                         isRequired
                         readOnly
+                        data-testid="state-input"
                         label="Estado"
                         placeholder="Digite seu endereço"
                         type="text"
@@ -491,7 +502,7 @@ export default function CustomersPage() {
                       <Button color="danger" variant="light" onPress={onClose}>
                         Cancelar
                       </Button>
-                      <Button color="primary" type="submit">
+                      <Button data-testid="submit-button" color="primary" type="submit">
                         {tempUpdateID !== "" ? "Atualizar" : "Cadastrar"}{" "}
                         cliente
                       </Button>

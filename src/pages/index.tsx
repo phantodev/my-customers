@@ -2,7 +2,7 @@ import { Card, CardBody } from "@heroui/card";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "@/config/axios-config";
 import { useNavigate } from "react-router-dom";
@@ -55,6 +55,10 @@ export default function IndexPage() {
     }
   };
 
+  useEffect(() => {
+    console.log(errors)
+  }, [errors])
+
   return (
     <section className="w-screen h-screen bg-purple-900 flex items-center justify-center">
       <div className="w-96">
@@ -65,14 +69,17 @@ export default function IndexPage() {
         >
           <CardBody>
             <h1 className="text-2xl font-semibold mb-4">Faça o login</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="flex flex-col gap-4">
                 <Input
                   isRequired
                   label="Email"
+                  data-testid="email-input"
                   placeholder="Digite seu e-mail"
+                  isInvalid={!!errors.email}
+                  errorMessage={errors.email?.message}
                   type="email"
-                  {...register("email")}
+                  {...register("email", { required: 'Campo obrigatório!' })}
                 />
                 <Input
                   isRequired
@@ -90,13 +97,17 @@ export default function IndexPage() {
                     )
                   }
                   label="Senha"
+                  data-testid="password-input"
                   placeholder="Digite sua senha"
+                  isInvalid={!!errors.password}
+                  errorMessage={errors.password?.message}
                   type={isPasswordVisible ? "text" : "password"}
-                  {...register("password")}
+                  {...register("password", { required: 'Campo obrigatório!' })}
                 />
                 <Button
                   color="primary"
                   isLoading={isLoading}
+                  data-testid="submit-button"
                   size="lg"
                   type="submit"
                   variant="solid"

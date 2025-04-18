@@ -1,36 +1,36 @@
 {
   "banners": [
-  {
-    "id": 1,
-    "title": "Banner 1",
-    "imageUrl": "https://picsum.photos/200/300",
-    "link": "/promo1"
-  },
-  {
-    "id": 2,
-    "title": "Banner 2",
-    "imageUrl": "https://picsum.photos/200/300",
-    "link": "/promo2"
-  },
-  {
-    "id": 3,
-    "title": "Banner 3",
-    "imageUrl": "https://picsum.photos/200/300",
-    "link": "/promo3"
-  },
-  {
-    "id": 4,
-    "title": "Banner 4",
-    "imageUrl": "https://picsum.photos/200/300",
-    "link": "/promo4"
-  },
-  {
-    "id": 5,
-    "title": "Banner 5",
-    "imageUrl": "https://picsum.photos/200/300",
-    "link": "/promo5"
-  }
-],
+    {
+      "id": "1",
+      "title": "Banner 1",
+      "imageUrl": "https://picsum.photos/200/300",
+      "link": "/promo1"
+    },
+    {
+      "id": "2",
+      "title": "Banner 2",
+      "imageUrl": "https://picsum.photos/200/300",
+      "link": "/promo2"
+    },
+    {
+      "id": "3",
+      "title": "Banner 3",
+      "imageUrl": "https://picsum.photos/200/300",
+      "link": "/promo3"
+    },
+    {
+      "id": "4",
+      "title": "Banner 4",
+      "imageUrl": "https://picsum.photos/200/300",
+      "link": "/promo4"
+    },
+    {
+      "id": "5",
+      "title": "Banner 5",
+      "imageUrl": "https://picsum.photos/200/300",
+      "link": "/promo5"
+    }
+  ],
   "customers": [
     {
       "nome": "José Dudu",
@@ -257,6 +257,41 @@
       "cidade": "Curitiba",
       "estado": "PR",
       "cep": "81170327"
+    },
+    {
+      "id": "3395",
+      "nome": "Jaspion Silva",
+      "documento": "032954789",
+      "telefone": "41997602541",
+      "email": "eduardo.burko@gmail.com",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "81170370"
+    },
+    {
+      "id": "59b6",
+      "status": "Ativo",
+      "nome": "asbdksabkasdbjkasdbajskdsa",
+      "documento": "03262592929",
+      "email": "dudu@dudu.com",
+      "telefone": "45465456456",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "81170370"
+    },
+    {
+      "id": "811d",
+      "nome": "Jaspion Silva",
+      "documento": "032954789",
+      "telefone": "41997602541",
+      "email": "eduardo.burko@gmail.com",
+      "endereco": "Rua Angelina Turesso Cavalim",
+      "cidade": "Curitiba",
+      "estado": "PR",
+      "cep": "81170370",
+      "status": "Ativo"
     }
   ],
   "login": {
